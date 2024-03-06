@@ -57,6 +57,28 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
+      - name: Notify Failure Discord
+        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+        if: failure()
+        with:
+            severity: error
+            description: |
+              **Event:** ${{ github.event_name }}
+              **Repo:** [${{ github.repository }}](https://github.com/${{ github.repository }})
+              **Job:** ${{ github.job }}
+              **Commit:** [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+            details: Deploy Failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Notify Success Discord
+        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+        if: success()
+        with:
+            severity: info
+            description: 'Testing: ${{ github.event.commits.*.id }}'
+            details: Deploy Succeeded!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest

@@ -1,8 +1,13 @@
 name: Periodic Health Check
 
+# on:
+#   push:
+#     branches: [main, feature]
+
+# every 5 minutes
 on:
-  push:
-    branches: [main, feature]
+  schedule:
+    - cron: '*/5 * * * *'
 
 jobs:
   health-check:

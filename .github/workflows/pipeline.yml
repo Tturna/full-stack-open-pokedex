@@ -47,6 +47,11 @@ jobs:
           echo "SKIP=$SKIP"
           echo "::set-output name=skip::$SKIP"
       
+      - name: Echo skip (temp)
+        run: |
+          echo "outputs.skip=${{ steps.check-skip.outputs.skip }}"
+          echo "!outputs.skip=${{ !steps.check-skip.outputs.skip }}"
+      
       - name: Setup Flyctl
         if: ${{ !steps.check-skip.outputs.skip && github.event_name == 'push' }}
         uses: superfly/flyctl-actions/setup-flyctl@master

@@ -62,6 +62,11 @@ jobs:
         if: failure()
         with:
             severity: error
+            description: |
+              Event: ${{ github.event_name }}
+              Repo: [${{ github.repository }}](https://github.com/${{ github.repository }})
+              Job: ${{ github.job }}
+              Commit: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
             details: Deploy Failed!
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 

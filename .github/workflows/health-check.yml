@@ -2,7 +2,7 @@ name: Periodic Health Check
 
 on:
   push:
-    branches: [main, feature!]
+    branches: [main, feature]
 
 jobs:
   health-check:
